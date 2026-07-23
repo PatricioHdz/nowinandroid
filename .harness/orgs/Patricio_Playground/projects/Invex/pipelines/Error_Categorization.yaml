@@ -20,6 +20,7 @@ pipeline:
           caching:
             enabled: true
             override: false
+            paths: []
           platform:
             os: Linux
             arch: Amd64
@@ -45,5 +46,9 @@ pipeline:
                   name: Build and Unit Test
                   identifier: Build_and_Unit_Test
                   spec:
+                    connectorRef: Docker_Patricio
+                    image: eclipse-temurin:17-jdk
                     shell: Sh
                     command: ./gradlew testDemoDebug --stacktrace
+          buildIntelligence:
+            enabled: true
