@@ -4,7 +4,7 @@ ruleGroups:
     conditionExpression:
       key: "errorCode"
       operand: "isNot"
-      value: 0
+      value: 1
     actions:
       - type: "setErrorCategory"
         value: "UNKNOWN_FAILURE"
