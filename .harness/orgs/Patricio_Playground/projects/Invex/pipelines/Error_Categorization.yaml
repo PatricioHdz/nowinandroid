@@ -47,7 +47,7 @@ pipeline:
                   identifier: Build_and_Unit_Test
                   spec:
                     connectorRef: Docker_Patricio
-                    image: eclipse-temurin:17-jdk
+                    image: mingc/android-build-box:latest
                     shell: Sh
                     command: ./gradlew testDemoDebug --stacktrace
           buildIntelligence:
