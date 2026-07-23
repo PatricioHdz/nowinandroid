@@ -1,0 +1,37 @@
+pipeline:
+  name: Error Categorization
+  identifier: Error_Categorization
+  projectIdentifier: Invex
+  orgIdentifier: Patricio_Playground
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: Github
+        build: <+input>
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: false
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Build and Unit Test
+                  identifier: Build_and_Unit_Test
+                  spec:
+                    shell: Sh
+                    command: ./gradlew testDemoDebug --stacktrace
