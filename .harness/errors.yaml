@@ -1,0 +1,85 @@
+version: "1.0"
+ruleGroups:
+
+  # 1. Fallo de compilación por sintaxis/dependencias (Gradle)
+  - name: "Gradle Build Failed"
+    conditionExpression:
+      operator: "AND"
+      conditions:
+        - key: "standardOutput"
+          operand: "contains"
+          value: "BUILD FAILED"
+        - key: "errorCode"
+          operand: "isNot"
+          value: 0
+    actions:
+      - type: "setErrorCategory"
+        value: "APPLICATION_FAILURE"
+      - type: "setErrorSubcategory"
+        value: "DEPENDENCY_RESOLUTION_FAILED"
+      - type: "setErrorMessage"
+        value: "[ERR-1001] Falló el build de Gradle. Revisa libs.versions.toml y los logs de compilación."
+
+  # 2. Tests unitarios fallidos (incluye screenshot tests de Roborazzi)
+  - name: "Unit or Screenshot Tests Failed"
+    conditionExpression:
+      operator: "AND"
+      conditions:
+        - key: "standardOutput"
+          operand: "contains"
+          value: "FAILED"
+        - key: "standardOutput"
+          operand: "doesNotMatch"
+          value: "BUILD FAILED"
+    actions:
+      - type: "setErrorCategory"
+        value: "VERIFICATION_FAILURE"
+      - type: "setErrorSubcategory"
+        value: "UNIT_TESTS_FAILED"
+      - type: "setErrorMessage"
+        value: "[ERR-1801] Pruebas fallidas. Si son screenshot tests de Roborazzi, ejecuta recordRoborazziDemoDebug antes."
+
+  # 3. Out of memory / contenedor eliminado
+  - name: "Out of Memory"
+    conditionExpression:
+      operator: "OR"
+      conditions:
+        - key: "standardErrorOutput"
+          operand: "contains"
+          value: "heap out of memory"
+        - key: "standardErrorOutput"
+          operand: "contains"
+          value: "Killed"
+    actions:
+      - type: "setErrorCategory"
+        value: "RESOURCE_LIMITS_FAILURE"
+      - type: "setErrorSubcategory"
+        value: "CONTAINER_OOM_KILLED"
+      - type: "setErrorMessage"
+        value: "[ERR-1601] Proceso eliminado por falta de memoria. Aumenta los límites del step/pod."
+
+  # 4. Errores de lint / formato (Spotless)
+  - name: "Lint or Spotless Violation"
+    conditionExpression:
+      key: "standardOutput"
+      operand: "contains"
+      value: "spotlessCheck"
+    actions:
+      - type: "setErrorCategory"
+        value: "APPLICATION_FAILURE"
+      - type: "setErrorSubcategory"
+        value: "LINT_FORMAT_FAILED"
+      - type: "setErrorMessage"
+        value: "[ERR-1002] Violación de formato/lint. Ejecuta ./gradlew spotlessApply."
+
+  # 5. Catch-all — cualquier otro fallo no clasificado explícitamente
+  - name: "Uncategorized Failure"
+    conditionExpression:
+      key: "errorCode"
+      operand: "isNot"
+      value: 0
+    actions:
+      - type: "setErrorCategory"
+        value: "UNKNOWN_FAILURE"
+      - type: "setErrorMessage"
+        value: "[ERR-9999] Fallo no clasificado. Revisar logs completos del step."
