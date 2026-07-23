@@ -8,7 +8,7 @@ ruleGroups:
       conditions:
         - key: "standardOutput"
           operand: "contains"
-          value: "BUILD FAILED"
+          value: "FAILURE:"
         - key: "errorCode"
           operand: "isNot"
           value: 0
