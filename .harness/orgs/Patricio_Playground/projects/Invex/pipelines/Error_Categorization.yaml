@@ -30,6 +30,18 @@ pipeline:
             steps:
               - step:
                   type: Run
+                  name: Validate Error Categorization Rules
+                  identifier: Validate_Error_Categorization_Rules
+                  spec:
+                    shell: Sh
+                    command: |-
+                      if [ -f ".harness/errors.yaml" ]; then
+                          hcli errors validate --yaml-path .harness/errors.yaml
+                      else
+                          echo "⚠️  .harness/errors.yaml no encontrado — el pipeline continuará sin categorización de errores."
+                      fi
+              - step:
+                  type: Run
                   name: Build and Unit Test
                   identifier: Build_and_Unit_Test
                   spec:
