@@ -38,7 +38,7 @@ pipeline:
                     command: |-
                       #!/bin/bash
                       if [ -f ".harness/errors.yaml" ]; then
-                        hcli errors validate --yaml-path harness/errors.yaml
+                        hcli errors validate --yaml-path .harness/errors.yaml
                         if [ $? -ne 0 ]; then
                           echo "Error: errors.yaml validation failed"
                           exit 1
