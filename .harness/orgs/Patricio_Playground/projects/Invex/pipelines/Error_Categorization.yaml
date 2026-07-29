@@ -55,6 +55,5 @@ pipeline:
                     command: ./gradlew testDemoDebug --stacktrace
                   when:
                     stageStatus: Success
-                    condition: skip
           buildIntelligence:
             enabled: true
