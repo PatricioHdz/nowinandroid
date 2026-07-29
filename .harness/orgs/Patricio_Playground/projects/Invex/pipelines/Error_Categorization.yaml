@@ -31,6 +31,13 @@ pipeline:
             steps:
               - step:
                   type: Run
+                  name: Hcli Version
+                  identifier: Hcli_Version
+                  spec:
+                    shell: Sh
+                    command: hcli --version
+              - step:
+                  type: Run
                   name: Validate Error Categorization Rules
                   identifier: Validate_Error_Categorization_Rules
                   spec:
@@ -50,5 +57,8 @@ pipeline:
                     image: mingc/android-build-box:latest
                     shell: Sh
                     command: ./gradlew testDemoDebug --stacktrace
+                  when:
+                    stageStatus: Success
+                    condition: skip
           buildIntelligence:
             enabled: true
