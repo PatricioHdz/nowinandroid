@@ -1,12 +1,22 @@
 version: "1.0"
 ruleGroups:
-  - name: "Diagnostic Catch-All"
+  - name: "Test Failures"
     conditionExpression:
-      key: "errorCode"
-      operand: "isNot"
-      value: 0
+      operator: "AND"
+      conditions:
+        - key: "standardOutput"
+          operand: "contains"
+          value: "FAILED"
+        - key: "standardOutput"
+          operand: "doesNotMatch"
+          value: "BUILD"
+        - key: "errorCode"
+          operand: "isNot"
+          value: 0
     actions:
       - type: "setErrorCategory"
-        value: "UNKNOWN_FAILURE"
+        value: "VERIFICATION_FAILURE"
+      - type: "setErrorSubcategory"
+        value: "UNIT_TESTS_FAILED"
       - type: "setErrorMessage"
-        value: "[DIAGNOSTICO] Si ves este mensaje, el motor de categorización SI está funcionando."
+        value: "Test suite failed. Review the failing test cases and fix assertions."
