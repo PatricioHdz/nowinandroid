@@ -29,11 +29,16 @@ ruleGroups:
   #    (el segundo error real: "SDK location not found")
   #    También muy específico, va antes de las reglas genéricas de build.
   # --------------------------------------------------------------------------
-  - name: "Android SDK Not Found"
+- name: "Android SDK Not Found"
     conditionExpression:
-      key: "standardOutput"
-      operand: "contains"
-      value: "SDK location not found"
+      operator: "OR"
+      conditions:
+        - key: "standardOutput"
+          operand: "contains"
+          value: "SDK location not found"
+        - key: "standardErrorOutput"
+          operand: "contains"
+          value: "SDK location not found"
     actions:
       - type: "setErrorCategory"
         value: "CONFIGURATION_FAILURE"
