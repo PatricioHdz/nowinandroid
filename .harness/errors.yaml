@@ -1,22 +1,12 @@
 version: "1.0"
 ruleGroups:
-  - name: "Test Failures"
+  - name: "Uncategorized Failure"
     conditionExpression:
-      operator: "OR"
-      conditions:
-        - key: "standardOutput"
-          operand: "contains"
-          value: "FAILED"
-        - key: "standardOutput"
-          operand: "doesNotMatch"
-          value: "BUILD"
-        - key: "errorCode"
-          operand: "isNot"
-          value: 0
+      key: "errorCode"
+      operand: "isNot"
+      value: 0
     actions:
       - type: "setErrorCategory"
-        value: "VERIFICATION_FAILURE"
-      - type: "setErrorSubcategory"
-        value: "UNIT_TESTS_FAILED"
+        value: "UNKNOWN_FAILURE"
       - type: "setErrorMessage"
-        value: "Test suite failed. Review the failing test cases and fix assertions."
+        value: "[ERR-9999] Fallo no clasificado. Revisar logs completos del step."
