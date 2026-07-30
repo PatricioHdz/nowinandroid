@@ -8,9 +8,14 @@ ruleGroups:
   # --------------------------------------------------------------------------
   - name: "Incompatible JVM Version"
     conditionExpression:
-      key: "standardOutput"
-      operand: "contains"
-      value: "requires JVM"
+      operator: "OR"
+      conditions:
+        - key: "standardOutput"
+          operand: "contains"
+          value: "requires JVM"
+        - key: "standardErrorOutput"
+          operand: "contains"
+          value: "requires JVM"
     actions:
       - type: "setErrorCategory"
         value: "CONFIGURATION_FAILURE"
@@ -18,7 +23,7 @@ ruleGroups:
         value: "PLUGIN_CONFIGURATION_INVALID"
       - type: "setErrorMessage"
         value: "[ERR-1501] Versión de JVM incompatible con Gradle. Verifica la imagen del Run step (debe tener JDK 17+) y org.gradle.java.home."
- # --------------------------------------------------------------------------
+  # --------------------------------------------------------------------------
   # 2. Catch-all — SIEMPRE al final. Captura cualquier fallo que no haya
   #    coincidido con ninguna regla anterior, para que nada quede sin
   #    categorizar.
