@@ -45,7 +45,7 @@ ruleGroups:
       - type: "setErrorSubcategory"
         value: "PLUGIN_CONFIGURATION_INVALID"
       - type: "setErrorMessage"
-        value: "[ERR-1502] Android SDK no encontrado en el contenedor. Verifica ANDROID_HOME/ANDROID_SDK_ROOT o usa una imagen con el SDK preinstalado."
+        value: "[ERR-1502] Android SDK no encontrado en el contenedor."
 
   # --------------------------------------------------------------------------
   # 2. Catch-all — SIEMPRE al final. Captura cualquier fallo que no haya
