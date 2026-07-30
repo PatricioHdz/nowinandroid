@@ -2,7 +2,7 @@ version: "1.0"
 ruleGroups:
   - name: "Test Failures"
     conditionExpression:
-      operator: "AND"
+      operator: "OR"
       conditions:
         - key: "standardOutput"
           operand: "contains"
