@@ -22,7 +22,7 @@ ruleGroups:
       - type: "setErrorSubcategory"
         value: "PLUGIN_CONFIGURATION_INVALID"
       - type: "setErrorMessage"
-        value: "[ERR-1501] Versión de JVM incompatible con Gradle. Verifica la imagen del Run step (debe tener JDK 17+) y org.gradle.java.home."
+        value: "[ERR-1501] Versión de JVM incompatible con Gradle."
   # --------------------------------------------------------------------------
   # 2. Catch-all — SIEMPRE al final. Captura cualquier fallo que no haya
   #    coincidido con ninguna regla anterior, para que nada quede sin
