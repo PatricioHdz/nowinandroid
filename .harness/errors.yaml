@@ -23,6 +23,25 @@ ruleGroups:
         value: "PLUGIN_CONFIGURATION_INVALID"
       - type: "setErrorMessage"
         value: "[ERR-1501] Versión de JVM incompatible con Gradle."
+        
+  # --------------------------------------------------------------------------
+  # 2. Android SDK no encontrado
+  #    (el segundo error real: "SDK location not found")
+  #    También muy específico, va antes de las reglas genéricas de build.
+  # --------------------------------------------------------------------------
+  - name: "Android SDK Not Found"
+    conditionExpression:
+      key: "standardOutput"
+      operand: "contains"
+      value: "SDK location not found"
+    actions:
+      - type: "setErrorCategory"
+        value: "CONFIGURATION_FAILURE"
+      - type: "setErrorSubcategory"
+        value: "PLUGIN_CONFIGURATION_INVALID"
+      - type: "setErrorMessage"
+        value: "[ERR-1502] Android SDK no encontrado en el contenedor. Verifica ANDROID_HOME/ANDROID_SDK_ROOT o usa una imagen con el SDK preinstalado."
+
   # --------------------------------------------------------------------------
   # 2. Catch-all — SIEMPRE al final. Captura cualquier fallo que no haya
   #    coincidido con ninguna regla anterior, para que nada quede sin
