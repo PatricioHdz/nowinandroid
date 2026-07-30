@@ -29,7 +29,7 @@ ruleGroups:
   #    (el segundo error real: "SDK location not found")
   #    También muy específico, va antes de las reglas genéricas de build.
   # --------------------------------------------------------------------------
-- name: "Android SDK Not Found"
+  - name: "Android SDK Not Found"
     conditionExpression:
       operator: "OR"
       conditions:
